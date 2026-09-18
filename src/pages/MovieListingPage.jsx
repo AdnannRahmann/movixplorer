@@ -7,7 +7,6 @@ export default function MovieListingPage({ onSelectMovie }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch default movies or search movies
   useEffect(() => {
     const fetchMovies = async () => {
       setLoading(true);
@@ -21,8 +20,7 @@ export default function MovieListingPage({ onSelectMovie }) {
         const res = await fetch(endpoint);
         if (!res.ok) throw new Error('Failed to fetch movies from API');
         const data = await res.json();
-
-        // Normalize response (Search returns Array of { show: {...} }, Shows endpoint returns Array of shows)
+        
         const parsedData = searchQuery.trim() !== '' 
           ? data.map((item) => item.show) 
           : data.slice(0, 30); // Limit default view for performance
@@ -69,7 +67,6 @@ export default function MovieListingPage({ onSelectMovie }) {
           </div>
         </div>
 
-        {/* Content Section */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 text-slate-400">
             <div className="w-10 h-10 border-4 border-red-500 border-t-transparent rounded-full animate-spin mb-4" />
